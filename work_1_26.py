@@ -34,5 +34,8 @@ print counts
 #df_read.saveAsTextFile("/tmp/result1")
 print "----------------------------------------------"
 
+
+# write into Elasticsearch
 es = Elasticsearch(['ip-172-31-1-8'], http_auth=('elastic', 'changeme'), verify_certs=False)
 doc = {'timeStamp': 201709021230, 'wind': 20, 'wban': 528}
+es.index(index='test_1', doc_type='inputs',body=doc )
