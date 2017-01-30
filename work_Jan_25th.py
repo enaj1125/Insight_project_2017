@@ -1,4 +1,4 @@
-mport pyspark
+import pyspark
 import sys
 import json
 import datetime, time
