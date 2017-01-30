@@ -2,15 +2,14 @@ import pyspark
 import sys
 import json
 import datetime, time
+from time import strftime
 from pyspark import SparkConf, SparkContext
 from elasticsearch import Elasticsearch
-
 conf = SparkConf().setAppName("YanJ_app").setMaster("spark://ip-172-31-1-12:7077")
 sc = SparkContext(conf = conf)
 
 # Input files
 textFile = sc.textFile("s3n://timo-twitter-data/2015/05/01/00/30.json")
-
 
 # Map reduce
 def map_func(line):
@@ -25,14 +24,15 @@ def map_func(line):
     if 'timestamp_ms' in each_line:
         raw_time = float(each_line['timestamp_ms'][:10])
         t_time = datetime.datetime.utcfromtimestamp(raw_time)
+        t_time = t_time.strftime('%m/%d/%Y')
         B = True
     if 'text' in each_line:
         t_text = each_line['text']
         C = True
     if A and B and C:
         doc = {'usr_id': usr_id, 'ttext': t_text, 'time': t_time}
-        #es.index(index='test_3', doc_type='inputs', body=doc)
-        print doc
+        es.index(index='test_4', doc_type='inputs', body=doc)
+#        print doc        
 
 def reduce_func(a, b):
     return a + b
