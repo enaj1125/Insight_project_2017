@@ -4,7 +4,7 @@ import datetime, time
 from time import strftime
 from pyspark import SparkConf, SparkContext
 from elasticsearch import Elasticsearch
-conf = SparkConf().setAppName("YanJ_app").setMaster("spark://ip-172-31-1-12:7077")
+conf = SparkConf().setAppName("YanJ_app").setMaster("")
 sc = SparkContext(conf = conf)
 
 # Input files
